@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   scope "(:locale)", :locale => /en/ do
     root	'static_pages#home'
     get 'home'=> 'static_pages#home'
