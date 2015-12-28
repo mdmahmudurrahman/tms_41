@@ -1,5 +1,5 @@
 class Supervisor::CourseSubjectsController < ApplicationController
-
+  
   def edit
     @course_subject = CourseSubject.find params[:id]
     @course = @course_subject.course
