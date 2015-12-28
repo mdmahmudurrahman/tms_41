@@ -1,13 +1,14 @@
 require "rails_helper"
 
 describe Supervisor::UsersCoursesController do
-   let(:user){create :user}
-   let(:user_ids) {User.all.ids}
-   let(:course){create :course}
-   let(:user_course){create :user_course}
+   let!(:user){create :user}
+   let!(:course){create :course}
+
   before do
     sign_in user
     allow(controller).to receive(:current_user).and_return user
+    @course = create(:course)
+    @user_ids = User.all.ids
   end
 
    describe "GET #show" do
@@ -20,11 +21,11 @@ describe Supervisor::UsersCoursesController do
        end
      end
    end
-   #
-   # describe "can PATCH #update" do
-   #   it "update" do
-   #     patch :update , user_ids: user_ids
-   #     expect(response.redirect?).to be_truthy
-   #   end
-   # end
+
+   describe "can PATCH #update" do
+     it "update" do
+       patch :update, id: @course, course: attributes_for(:course, user_ids: @user_ids)
+       expect(response).to redirect_to [:supervisor, @course]
+     end
+   end
 end
